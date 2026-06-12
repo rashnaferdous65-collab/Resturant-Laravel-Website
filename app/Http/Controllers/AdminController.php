@@ -1,4 +1,4 @@
-
+```php
 <?php
 
 namespace App\Http\Controllers;
@@ -11,173 +11,206 @@ use App\Models\Table_book;
 
 class AdminController extends Controller
 {
-     public function category(){
-        $data= Category::all();
-        return view('admin.category' , compact('data'));
+    /* ---------------- CATEGORY ---------------- */
+
+    public function category()
+    {
+        return view('admin.category', [
+            'data' => Category::all()
+        ]);
     }
 
-          
-   public function made_category(Request $request)
-{
-    $data = new Category;
-    $data->cat_title = $request->category;
-    $data->save();
-    flash()->success('Category created successfully!');
-   return redirect()->back();
-}
+    public function made_category(Request $request)
+    {
+        Category::create([
+            'cat_title' => $request->category
+        ]);
 
-public function cat_delete($id){
-    $data = Category::findOrFail($id); 
-    $data->delete();
-     flash()->success('Category deleted successfully!');
-    return redirect()->back();
-  
-    
-
-}
-public function edit_category($id){
-    $data = Category::findOrFail($id); 
-    return view('admin.edit_category', compact('data')); 
-}
-
-public function update_category(Request $request, $id)
-{
-    $request->validate([
-        'cat_name' => 'required|string|max:255',
-    ]);
-
-    $data = Category::findOrFail($id);
-    $data->cat_title = $request->cat_name;
-    $data->save();
-    flash()->success('Category Updated successfully!');
-    return redirect('/category');
-
-
-}
-    public function add_food(){
-          $data= Category::all();
-        return view('admin.add_food', compact('data'));
+        flash()->success('Category created successfully!');
+        return back();
     }
 
-public function upload_food(Request $request)
-{
-    $food = new Food();
+    public function cat_delete($id)
+    {
+        Category::findOrFail($id)->delete();
 
-    $food->title = $request->title;
-    $food->description = $request->description;
-    $food->price = $request->price;
-    $food->category_id = $request->category;
-    
-    
-    if ($request->hasFile('image')) {
-        $image = $request->file('image');
-        $imagename = time().'_'.$image->getClientOriginalName(); 
-        $image->move(public_path('foodimage'), $imagename); 
-        
-       
-        $food->image = $imagename; 
+        flash()->success('Category deleted successfully!');
+        return back();
     }
 
-    $food->save(); 
-    flash()->success('Food Details Uploaded  successfully!');
-    return redirect()->back();
-}
-
-public function view_food(){
-   $data=Food::all();
-    return view('admin.view_food', compact('data'));
-}
-
-public function delete_food($id){
-
-
-    $data= Food::find($id);
-
-    $data->delete();
-       flash()->success('Food Details Deleted  successfully!');
-    return redirect()->back()->with('message', 'Book Details Deleted successfully');
-}
-
-
-public function edit_food($id){
-
-$food= Food::find($id);
-$category= Category::all();
-
-    return view('admin.edit_food', compact('food', 'category'));
-}
-
-public function update_food(Request $request, $id){
-
-
-    $data= Food::find($id);
-
-    $data->title= $request->title;
-    $data->description= $request->description;
-    $data->price= $request->price;
-    $data->category_id= $request->category;
-    
-
-    if ($request->hasFile('image')) {
-        $image = $request->file('image');
-        $imagename = time().'_'.$image->getClientOriginalName(); 
-        $image->move(public_path('foodimage'), $imagename); 
-        
-       
-        $data->image = $imagename; 
+    public function edit_category($id)
+    {
+        return view('admin.edit_category', [
+            'data' => Category::findOrFail($id)
+        ]);
     }
 
-    $data->save();
-        flash()->success('Food Details Updated  successfully!');
-    return redirect('view_food')->with('message', 'Food Updated Successfully');
-}
+    public function update_category(Request $request, $id)
+    {
+        $request->validate([
+            'cat_name' => 'required|max:255'
+        ]);
 
-public function view_order(){
-$data= Order::all();
-    return view('admin.view_order', compact('data'));
-}
+        $category = Category::findOrFail($id);
 
+        $category->update([
+            'cat_title' => $request->cat_name
+        ]);
 
-public function delivered($id)
-{
-    $data = Order::findOrFail($id);
+        flash()->success('Category Updated successfully!');
 
-    if ($data->delivary_status !== 'Delivered') {
-        $data->delivary_status = 'Delivered';
-        $data->save();
+        return redirect('/category');
     }
-      flash()->success('Food Deliverd successfully!');
-    return redirect()->back();
-}
 
+    /* ---------------- FOOD ---------------- */
 
-
-public function cancel($id)
-{
-    $data = Order::findOrFail($id);
-
-    if ($data->delivary_status !== 'Cancelled') {
-        $data->delivary_status = 'Cancelled';
-        $data->save();
+    public function add_food()
+    {
+        return view('admin.add_food', [
+            'data' => Category::all()
+        ]);
     }
-      flash()->success('Food Item Cancelled!');
-    return redirect()->back();
-}
 
-public function on_the_way($id)
-{
-    $data = Order::findOrFail($id);
+    public function upload_food(Request $request)
+    {
+        $food = new Food();
 
-    if ($data->delivary_status !== 'On the way') {
-        $data->delivary_status = 'On the way';
-        $data->save();
+        $food->fill([
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category
+        ]);
+
+        if ($request->hasFile('image')) {
+            $file = $request->image;
+
+            $imageName = time() . '_' . $file->getClientOriginalName();
+
+            $file->move(public_path('foodimage'), $imageName);
+
+            $food->image = $imageName;
+        }
+
+        $food->save();
+
+        flash()->success('Food Details Uploaded successfully!');
+
+        return back();
     }
-       flash()->success('Food Swiched to On The Way!');
-    return redirect()->back();
-}
 
-public function reservation(){
-   $data= Table_book::all();
-    return view('admin.reservation' , compact('data'));
+    public function view_food()
+    {
+        return view('admin.view_food', [
+            'data' => Food::all()
+        ]);
+    }
+
+    public function delete_food($id)
+    {
+        Food::findOrFail($id)->delete();
+
+        flash()->success('Food Details Deleted successfully!');
+
+        return back();
+    }
+
+    public function edit_food($id)
+    {
+        return view('admin.edit_food', [
+            'food' => Food::findOrFail($id),
+            'category' => Category::all()
+        ]);
+    }
+
+    public function update_food(Request $request, $id)
+    {
+        $food = Food::findOrFail($id);
+
+        $food->fill([
+            'title' => $request->title,
+            'description' => $request->description,
+            'price' => $request->price,
+            'category_id' => $request->category
+        ]);
+
+        if ($request->hasFile('image')) {
+
+            $image = $request->image;
+
+            $fileName = time() . '_' . $image->getClientOriginalName();
+
+            $image->move(public_path('foodimage'), $fileName);
+
+            $food->image = $fileName;
+        }
+
+        $food->save();
+
+        flash()->success('Food Details Updated successfully!');
+
+        return redirect('view_food');
+    }
+
+    /* ---------------- ORDER ---------------- */
+
+    public function view_order()
+    {
+        return view('admin.view_order', [
+            'data' => Order::all()
+        ]);
+    }
+
+    private function updateOrderStatus($id, $status, $message)
+    {
+        $order = Order::findOrFail($id);
+
+        if ($order->delivary_status !== $status) {
+            $order->update([
+                'delivary_status' => $status
+            ]);
+        }
+
+        flash()->success($message);
+
+        return back();
+    }
+
+    public function delivered($id)
+    {
+        return $this->updateOrderStatus(
+            $id,
+            'Delivered',
+            'Food Delivered successfully!'
+        );
+    }
+
+    public function cancel($id)
+    {
+        return $this->updateOrderStatus(
+            $id,
+            'Cancelled',
+            'Food Item Cancelled!'
+        );
+    }
+
+    public function on_the_way($id)
+    {
+        return $this->updateOrderStatus(
+            $id,
+            'On the way',
+            'Food Switched to On The Way!'
+        );
+    }
+
+    /* ---------------- RESERVATION ---------------- */
+
+    public function reservation()
+    {
+        return view('admin.reservation', [
+            'data' => Table_book::all()
+        ]);
+    }
 }
-}
+```
+
