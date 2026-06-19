@@ -1,65 +1,126 @@
 <x-guest-layout>
-    <form method="POST" action="{{ route('register') }}">
+    <form method="POST" action="{{ route('register') }}" class="space-y-4">
         @csrf
 
-        <!-- Name -->
+        <!-- Full Name -->
         <div>
-            <x-input-label for="name" :value="__('Name')" />
-            <x-text-input id="name" class="block mt-1 w-full" type="text" name="name" :value="old('name')" required autofocus autocomplete="name" />
-            <x-input-error :messages="$errors->get('name')" class="mt-2" />
+            <x-input-label for="name" value="Full Name" />
+
+            <x-text-input
+                id="name"
+                name="name"
+                type="text"
+                class="w-full mt-1"
+                :value="old('name')"
+                required
+                autofocus
+                autocomplete="name"
+            />
+
+            <x-input-error class="mt-2" :messages="$errors->get('name')" />
         </div>
 
-        <!-- Email Address -->
-        <div class="mt-4">
-            <x-input-label for="email" :value="__('Email')" />
-            <x-text-input id="email" class="block mt-1 w-full" type="email" name="email" :value="old('email')" required autocomplete="username" />
-            <x-input-error :messages="$errors->get('email')" class="mt-2" />
-        </div>
-         <!-- Phone -->
-        <div class="mt-4">
-            <x-input-label for="phone" :value="__('Phone')" />
-            <x-text-input id="phone" class="block mt-1 w-full" type="tel" name="phone" :value="old('phone')" required autocomplete="phone" />
-            <x-input-error :messages="$errors->get('phone')" class="mt-2" />
-        </div>
+        <!-- Email & Phone -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
 
-         <!-- Address -->
-        <div class="mt-4">
-            <x-input-label for="address" :value="__('Address')" />
-            <x-text-input id="address" class="block mt-1 w-full" type="text" name="address" :value="old('address')" required autocomplete="address" />
-            <x-input-error :messages="$errors->get('address')" class="mt-2" />
-        </div>
+            <div>
+                <x-input-label for="email" value="Email Address" />
 
-        <!-- Password -->
-        <div class="mt-4">
-            <x-input-label for="password" :value="__('Password')" />
+                <x-text-input
+                    id="email"
+                    name="email"
+                    type="email"
+                    class="w-full mt-1"
+                    :value="old('email')"
+                    required
+                    autocomplete="username"
+                />
 
-            <x-text-input id="password" class="block mt-1 w-full"
-                            type="password"
-                            name="password"
-                            required autocomplete="new-password" />
+                <x-input-error class="mt-2" :messages="$errors->get('email')" />
+            </div>
 
-            <x-input-error :messages="$errors->get('password')" class="mt-2" />
-        </div>
+            <div>
+                <x-input-label for="phone" value="Phone Number" />
 
-        <!-- Confirm Password -->
-        <div class="mt-4">
-            <x-input-label for="password_confirmation" :value="__('Confirm Password')" />
+                <x-text-input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    class="w-full mt-1"
+                    :value="old('phone')"
+                    required
+                    autocomplete="tel"
+                />
 
-            <x-text-input id="password_confirmation" class="block mt-1 w-full"
-                            type="password"
-                            name="password_confirmation" required autocomplete="new-password" />
+                <x-input-error class="mt-2" :messages="$errors->get('phone')" />
+            </div>
 
-            <x-input-error :messages="$errors->get('password_confirmation')" class="mt-2" />
         </div>
 
-        <div class="flex items-center justify-end mt-4">
-            <a class="underline text-sm text-gray-600 hover:text-gray-900 rounded-md focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500" href="{{ route('login') }}">
-                {{ __('Already registered?') }}
+        <!-- Address -->
+        <div>
+            <x-input-label for="address" value="Address" />
+
+            <x-text-input
+                id="address"
+                name="address"
+                type="text"
+                class="w-full mt-1"
+                :value="old('address')"
+                required
+                autocomplete="street-address"
+            />
+
+            <x-input-error class="mt-2" :messages="$errors->get('address')" />
+        </div>
+
+        <!-- Password Section -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
+
+            <div>
+                <x-input-label for="password" value="Password" />
+
+                <x-text-input
+                    id="password"
+                    name="password"
+                    type="password"
+                    class="w-full mt-1"
+                    required
+                    autocomplete="new-password"
+                />
+
+                <x-input-error class="mt-2" :messages="$errors->get('password')" />
+            </div>
+
+            <div>
+                <x-input-label for="password_confirmation" value="Confirm Password" />
+
+                <x-text-input
+                    id="password_confirmation"
+                    name="password_confirmation"
+                    type="password"
+                    class="w-full mt-1"
+                    required
+                    autocomplete="new-password"
+                />
+
+                <x-input-error class="mt-2" :messages="$errors->get('password_confirmation')" />
+            </div>
+
+        </div>
+
+        <!-- Action -->
+        <div class="flex items-center justify-between mt-6">
+
+            <a href="{{ route('login') }}"
+               class="text-sm text-gray-600 underline hover:text-gray-900">
+                Already have an account?
             </a>
 
-            <x-primary-button class="ms-4">
-                {{ __('Register') }}
+            <x-primary-button>
+                Create Account
             </x-primary-button>
+
         </div>
     </form>
 </x-guest-layout>
