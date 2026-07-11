@@ -1,143 +1,167 @@
 <!DOCTYPE html>
-<html> 
-  @include('admin.css')
-  <style>
-    /* Add Food Form Design */
-.food-card {
-    background: #2a2f34;
-    border-radius: 15px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.4);
+<html lang="en">
+
+@include('admin.css')
+
+<style>
+.edit-box{
+    max-width: 750px;
+    margin: 20px auto;
+    background: #2b3035;
+    border-radius: 18px;
+    padding: 30px;
+    box-shadow: 0 8px 25px rgba(0,0,0,.35);
 }
 
-.food-card h4 {
-    color: #ffffff;
-    font-weight: 600;
-    letter-spacing: 1px;
-}
-
-.food-label {
-    color: #cfd2d6;
-    font-weight: 500;
-    margin-bottom: 6px;
-}
-
-.food-input {
-    background: #1f2327;
-    border: 1px solid #444;
+.edit-box h3{
+    text-align: center;
     color: #fff;
-    padding: 10px 12px;
+    margin-bottom: 25px;
+    font-weight: 600;
+}
+
+.form-title{
+    color: #d7d7d7;
+    font-weight: 600;
+    margin-bottom: 8px;
+}
+
+.form-control,
+.form-select{
+    background: #1d2125;
+    border: 1px solid #4d4d4d;
+    color: #fff;
     border-radius: 8px;
 }
 
-.food-input:focus {
-    background: #1f2327;
-    border-color: #0d6efd;
-    box-shadow: 0 0 0 0.15rem rgba(13,110,253,.25);
+.form-control:focus,
+.form-select:focus{
+    background: #1d2125;
     color: #fff;
+    border-color: #20c997;
+    box-shadow: none;
 }
 
-.food-btn {
-    background: linear-gradient(135deg, #198754, #20c997);
+.preview-image{
+    width: 120px;
+    border-radius: 8px;
+    border: 2px solid #555;
+}
+
+.update-btn{
+    background: #198754;
     border: none;
-    padding: 10px 40px;
+    padding: 10px 35px;
     border-radius: 30px;
     font-weight: 600;
-    color: #fff;
-    transition: 0.3s ease;
 }
 
-.food-btn:hover {
-    background: linear-gradient(135deg, #157347, #198754);
-    transform: translateY(-2px);
+.update-btn:hover{
+    background: #157347;
 }
+</style>
 
-.food_image{
+<body>
 
-    width:100px;
-    height: auto; 
-}
-  </style>
-  <body>
-    @include('admin.header')
-     @include('admin.slidebar')
-        <div class="page-content">
-        <div class="page-header">
-          <div class="container-fluid">
-             
-         <div class="container-fluid">
-    <div class="row justify-content-center">
-        <div class="col-md-7">
-            <div class="card shadow-lg border-0 rounded-4">
-                <div class="card-header bg-dark text-white text-center rounded-top-4">
-                    <h4 class="mb-0">🍔 Update Food Details</h4>
-                </div>
+@include('admin.header')
+@include('admin.slidebar')
 
-                <div class="card-body p-4">
-                    <form action="{{url('update_food' , $food->id)}}" method="POST" enctype="multipart/form-data">
-                        @csrf 
-                         @method('PUT')
+<div class="page-content">
+<div class="page-header">
+<div class="container-fluid">
 
-                        <!-- Food Title -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"> Edit Food Title</label>
-                            <input type="text" name="title" class="form-control"
-                                   placeholder="Enter food title" value="{{$food->title}}">
-                        </div>
+<div class="edit-box">
 
-                        <!-- Food Description -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"> Edit Food Details</label>
-                            <textarea name="description" class="form-control" rows="3"
-                                      placeholder="Enter food description" value="">{{$food->description}}</textarea>
-                        </div>
+    <h3>Edit Food Information</h3>
 
-                        <!-- Food Price -->
-                        <div class="mb-3">
-                            <label class="form-label fw-bold"> Edit Food Price</label>
-                            <input type="number" name="price" class="form-control"
-                                   placeholder="Enter food price" value="{{$food->price}}">
-                        </div>
+    <form action="{{ url('update_food',$food->id) }}" method="POST" enctype="multipart/form-data">
 
-                        <!-- Food Category -->
-                            <div class="mb-3">
-    <label class="form-label fw-bold">Edit Food Category</label>
-    <select name="category" required class="form-control custom-file">
-        <option value="">Select a Category</option>
-        
-        @foreach($category as $cat)
-            <option value="{{ $cat->id }}" {{ $food->category_id == $cat->id ? 'selected' : '' }}>
-                {{ $cat->cat_title }}
-            </option>
-        @endforeach
+        @csrf
+        @method('PUT')
 
-    </select>
-</div>
-                                <!-- Current Food Image -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold"> Current Food Image</label>
-                           <img src="{{ asset('foodimage/' . $food->image) }}"  class="food_image" alt="">
-                        </div>
-                        <!-- Food Image -->
-                        <div class="mb-4">
-                            <label class="form-label fw-bold"> Edit Food Image</label>
-                            <input type="file" name="image" class="form-control">
-                        </div>
-
-                        <!-- Submit Button -->
-                        <div class="text-center">
-                            <button type="submit" class="btn btn-primary px-5 py-2">
-                                Update Food
-                            </button>
-                        </div>
-                    </form>
-                </div>
-            </div>
+        <div class="mb-3">
+            <label class="form-title">Food Name</label>
+            <input
+                type="text"
+                name="title"
+                class="form-control"
+                value="{{ $food->title }}"
+                placeholder="Food title">
         </div>
-    </div>
+
+        <div class="mb-3">
+            <label class="form-title">Description</label>
+            <textarea
+                name="description"
+                rows="4"
+                class="form-control"
+                placeholder="Write food description">{{ $food->description }}</textarea>
+        </div>
+
+        <div class="mb-3">
+            <label class="form-title">Price</label>
+            <input
+                type="number"
+                name="price"
+                value="{{ $food->price }}"
+                class="form-control"
+                placeholder="Food price">
+        </div>
+
+        <div class="mb-3">
+            <label class="form-title">Category</label>
+
+            <select name="category" class="form-select" required>
+
+                <option value="">Choose Category</option>
+
+                @foreach($category as $cat)
+
+                    <option value="{{ $cat->id }}"
+                        {{ $food->category_id == $cat->id ? 'selected' : '' }}>
+
+                        {{ $cat->cat_title }}
+
+                    </option>
+
+                @endforeach
+
+            </select>
+        </div>
+
+        <div class="mb-4">
+            <label class="form-title d-block">Current Image</label>
+
+            <img
+                src="{{ asset('foodimage/'.$food->image) }}"
+                class="preview-image"
+                alt="Food Image">
+        </div>
+
+        <div class="mb-4">
+            <label class="form-title">Upload New Image</label>
+
+            <input
+                type="file"
+                name="image"
+                class="form-control">
+        </div>
+
+        <div class="text-center">
+            <button type="submit" class="btn update-btn">
+                Save Changes
+            </button>
+        </div>
+
+    </form>
+
 </div>
 
+</div>
+</div>
+</div>
 
-            </div>
-          </div>
-         </div>
-        @include('admin.footer')
+@include('admin.footer')
+
+</body>
+</html>
