@@ -1,93 +1,154 @@
 <!DOCTYPE html>
-<html> 
-  @include('admin.css')
-   <style>
-.cat{
-     text-align: center;
-    font-weight: bold;
-    color: white;
-    padding-bottom: 50px;
-}
-    .table {
-    text-align: center;
-    margin: auto;
-    width: 1200px;       
-    border: 2px solid white;
-    table-layout: fixed; 
-    margin-top: 50px;
-}
+<html>
 
-th {
-    background-color: rgba(21, 142, 138, 0.79);
-     padding: 10px;
-     color: white;
-     font-weight: bold;
-}      
-td {
-    
-     color: white;
-     border: 3px solid white;
-     padding: 10px;
-     font-weight: bold;
-}
+@include('admin.css')
 
+<style>
+    .page-title {
+        text-align: center;
+        color: #fff;
+        font-weight: bold;
+        margin-bottom: 40px;
+    }
 
+    .table-wrapper {
+        width: 95%;
+        margin: 0 auto;
+        overflow-x: auto;
+    }
 
-.food_image{
+    .food-table {
+        width: 100%;
+        border-collapse: collapse;
+        border: 2px solid #fff;
+    }
 
-    width:80px;
-    height: auto; 
-}
-  </style>
+    .food-table th {
+        background: #0f8d8d;
+        color: #fff;
+        padding: 14px;
+        text-align: center;
+    }
+
+    .food-table td {
+        border: 2px solid #fff;
+        color: #fff;
+        padding: 12px;
+        text-align: center;
+        vertical-align: middle;
+    }
+
+    .food-table img {
+        width: 90px;
+        border-radius: 6px;
+    }
+
+    .action-box {
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        gap: 8px;
+    }
+
+    .edit-btn {
+        background: #0f8d8d;
+        color: #fff;
+        padding: 6px 16px;
+        border-radius: 4px;
+        text-decoration: none;
+    }
+
+    .delete-btn {
+        background: crimson;
+        color: #fff;
+        border: none;
+        padding: 6px 16px;
+        cursor: pointer;
+        border-radius: 4px;
+    }
+</style>
+
 <body>
 
-    @include('admin.header')
-     @include('admin.slidebar')
-        <div class="page-content">
-        <div class="page-header">
-          <div class="container-fluid">
-          <div>
+@include('admin.header')
+@include('admin.slidebar')
 
-          <h1 class="cat">View Food Details Here</h>
-          <table class="table">
+<div class="page-content">
+    <div class="page-header">
+        <div class="container-fluid">
 
-           <tr>
-           <th>Name</th>
-           <th>Description</th>
-           <th>Category</th>
-           <th>Price</th>
-           <th>Image</th>
-           <th>Action</th>
-           </tr>
-          @foreach($data as $item)
-           <tr>
-           <td>{{$item->title}}</td>
-           <td>{{ Str::limit($item->description, 50) }}</td>
-           <td>{{$item->category->cat_title}}</td>
-           <td>{{$item->price}}</td>
-           <td><img src="foodimage/{{$item->image}}" alt="" class="food_image"></td>
-           <td style="text-align: center;">  
-            <div style="display: flex; justify-content: center; gap: 10px; align-items: center;">
-            <a href="{{url('edit_food', $item->id)}}" 
-                                style="padding:5px 15px; background-color:rgba(21, 142, 138, 0.79);
-                             color:white; border:none; text-decoration:none; border-radius:3px; font-size:14px;">
-                                 Edit
-                                     </a>  
-           <form action="{{route('delete_food', $item->id)}}" method="POST" 
-             onsubmit="return confirm('Are you sure you want to delete this category?');">
-                    @csrf
-                    @method('DELETE')
-                    <button type="submit" style="padding:5px 10px; background-color:red; color:white; border:none; cursor:pointer;">
-                        Delete
-                    </button>
-                </form></td> </div>
-           </tr>
-             @endforeach
-          </table>
-    
-          </div>
+            <h2 class="page-title">Food List</h2>
 
-             </div>
-          </div>
-         </div>
-        @include('admin.footer')
+            <div class="table-wrapper">
+
+                <table class="food-table">
+
+                    <thead>
+                        <tr>
+                            <th>Food Name</th>
+                            <th>Description</th>
+                            <th>Category</th>
+                            <th>Price</th>
+                            <th>Food Image</th>
+                            <th>Manage</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+
+                        @foreach($data as $item)
+
+                            <tr>
+
+                                <td>{{ $item->title }}</td>
+
+                                <td>{{ Str::limit($item->description, 50) }}</td>
+
+                                <td>{{ $item->category->cat_title }}</td>
+
+                                <td>{{ $item->price }}</td>
+
+                                <td>
+                                    <img src="{{ asset('foodimage/' . $item->image) }}" alt="Food Image">
+                                </td>
+
+                                <td>
+                                    <div class="action-box">
+
+                                        <a href="{{ url('edit_food', $item->id) }}" class="edit-btn">
+                                            Edit
+                                        </a>
+
+                                        <form action="{{ route('delete_food', $item->id) }}" method="POST"
+                                            onsubmit="return confirm('Are you sure you want to delete this category?');">
+
+                                            @csrf
+                                            @method('DELETE')
+
+                                            <button type="submit" class="delete-btn">
+                                                Delete
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+                                </td>
+
+                            </tr>
+
+                        @endforeach
+
+                    </tbody>
+
+                </table>
+
+            </div>
+
+        </div>
+    </div>
+</div>
+
+@include('admin.footer')
+
+</body>
+</html>
