@@ -1,32 +1,40 @@
 <!DOCTYPE html>
 <html lang="en">
-@include('home.css')
 
-    
-    <!-- Navbar -->
-   @include('home.navbar')
-    <!-- header -->
-  
-  @include('home.header')
-    <!--  About Section  -->
-   
-  @include('home.about')
-    <!--  gallary Section  -->
+<head>
+    @include('home.css')
+</head>
+
+<body>
+
+    {{-- Navbar --}}
+    @include('home.navbar')
+
+    {{-- Header --}}
+    @include('home.header')
+
+    {{-- About --}}
+    @include('home.about')
+
+    {{-- Gallery --}}
     @include('home.gallery')
 
-    <!-- book a table Section  -->
-   @include('home.book_table')
+    {{-- Book Table --}}
+    @include('home.book_table')
 
-    <!-- BLOG Section  -->
-   
-@include('home.blog')
-    <!-- REVIEWS Section  -->
- 
-@include('home.review')
-    <!-- CONTACT Section  -->
-  
-@include('home.contact')
-    <!-- page footer  -->
+    {{-- Blog --}}
+    @include('home.blog')
 
+    {{-- Reviews --}}
+    @include('home.review')
+
+    {{-- Contact --}}
+    @include('home.contact')
+
+    {{-- Footer --}}
     @include('home.footer')
+
+</body>
+
+</html>
    
