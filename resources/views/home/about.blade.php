@@ -1,16 +1,39 @@
- <div id="about" class="container-fluid wow fadeIn" id="about"data-wow-duration="1.5s">
-        <div class="row">
-            <div class="col-lg-6 has-img-bg"></div>
-            <div class="col-lg-6">
-                <div class="row justify-content-center">
-                    <div class="col-sm-8 py-5 my-5">
-                        <h2 class="mb-4">About Us</h2>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Consectetur, quisquam accusantium nostrum modi, nemo, officia veritatis ipsum facere maxime assumenda voluptatum enim! Labore maiores placeat impedit, vero sed est voluptas!Lorem ipsum dolor sit amet, consectetur adipisicing elit. Expedita alias dicta autem, maiores doloremque quo perferendis, ut obcaecati harum, <br><br>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eum necessitatibus iste,
-                        nulla recusandae porro minus nemo eaque cum repudiandae quidem voluptate magnam voluptatum? <br>Nobis, saepe sapiente omnis qui eligendi pariatur. quis voluptas. Assumenda facere adipisci quaerat. Illum doloremque quae omnis vitae.</p>
-                        <p><b>Lonsectetur adipisicing elit. Blanditiis aspernatur, ratione dolore vero asperiores explicabo.</b></p>
-                        <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Eos ab itaque modi, reprehenderit fugit soluta, molestias optio repellat incidunt iure sed deserunt nemo magnam rem explicabo vitae. Cum, nostrum, quidem.</p>
-                    </div>
-                </div>
+<div class="container-fluid wow fadeIn" id="about" data-wow-duration="1.5s">
+    <div class="row align-items-center">
+
+        <div class="col-lg-6 has-img-bg"></div>
+
+        <div class="col-lg-6">
+            <div class="about-content py-5 px-lg-5 px-4">
+
+                <h2 class="mb-4">About Us</h2>
+
+                <p class="mb-3">
+                    Welcome to our restaurant, where every meal is prepared with fresh
+                    ingredients and a passion for exceptional taste. We believe that great
+                    food and warm hospitality create unforgettable dining experiences.
+                </p>
+
+                <p class="mb-3">
+                    Our talented chefs carefully craft each dish by combining traditional
+                    flavors with modern cooking techniques. Whether you're visiting with
+                    family, friends, or colleagues, we strive to make every moment
+                    memorable and enjoyable.
+                </p>
+
+                <p class="fw-bold mb-3">
+                    Fresh Ingredients • Delicious Recipes • Outstanding Service
+                </p>
+
+                <p class="mb-0">
+                    From casual lunches to special celebrations, our mission is to serve
+                    high quality food in a welcoming atmosphere. Thank you for choosing
+                    us, and we look forward to serving you with excellence every time
+                    you visit.
+                </p>
+
             </div>
         </div>
+
     </div>
+</div>
