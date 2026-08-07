@@ -1,23 +1,23 @@
-<x-app-layout>
+<x-slot name="header">
+    <h2 class="font-bold text-2xl text-gray-900">
+        {{ __('Dashboard') }}
+    </h2>
+</x-slot>
 
-    <x-slot name="header">
-        <div class="flex items-center justify-between">
-            <h2 class="text-2xl font-bold text-gray-800">
-                {{ __('Dashboard') }}
-            </h2>
-        </div>
-    </x-slot>
+<div class="py-12">
+    <div class="max-w-4xl mx-auto px-6">
+        <div class="rounded-2xl bg-white shadow-md overflow-hidden">
+            <div class="border-b px-6 py-4">
+                <h3 class="text-lg font-medium text-gray-800">
+                    {{ __('Welcome') }}
+                </h3>
+            </div>
 
-    <section class="py-10">
-        <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
-            <div class="bg-white rounded-xl shadow-md border border-gray-200">
-                <div class="px-8 py-6">
-                    <p class="text-lg font-medium text-gray-700">
-                        {{ __("You're logged in!") }}
-                    </p>
-                </div>
+            <div class="px-6 py-6">
+                <p class="text-base text-gray-600">
+                    {{ __("You're logged in!") }}
+                </p>
             </div>
         </div>
-    </section>
-
-</x-app-layout>
+    </div>
+</div>
